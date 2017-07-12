@@ -54,8 +54,7 @@ RUN apt-get update -qq && \
         xfonts-terminus && \
 
 # Install guacd
-    wget -O /tmp/guacamole-server.tar.gz "http://apache.org/dyn/closer.cgi?action=download&filename=incubator/guacamole/${GUACAMOLE_VERSION}-incubating/source/guacamole-server-${GUACAMOLE_VERSION}-incubating.tar
-.gz" && \
+    wget -O /tmp/guacamole-server.tar.gz "http://apache.org/dyn/closer.cgi?action=download&filename=incubator/guacamole/${GUACAMOLE_VERSION}-incubating/source/guacamole-server-${GUACAMOLE_VERSION}-incubating.tar.gz" && \
     tar xzf /tmp/guacamole-server.tar.gz -C /tmp && \
     cd /tmp/guacamole-server-${GUACAMOLE_VERSION}-incubating && \
     ./configure --prefix=/usr --sbindir=/usr/bin && \
