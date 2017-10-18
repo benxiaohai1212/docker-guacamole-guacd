@@ -1,14 +1,13 @@
 FROM debian:stretch-slim
 
 ARG GUACAMOLE_VERSION="0.9.13"
-ARG DEBIAN_FRONTEND="noninteractive"
 ENV HOME=/config
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
 # Install build packages
 RUN apt-get update -qq && \
-    apt-get install -qy \ 
+    DEBIAN_FRONTEND=noninteractive apt-get install -qy \ 
         gcc \
         make \
         libcairo2-dev \
@@ -26,7 +25,7 @@ RUN apt-get update -qq && \
         wget && \
 
 # Install runtime packages
-    apt-get install -qy \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qy \
         gir1.2-pango-1.0 \
         libcairo2 \
         libpango-1.0-0 \
@@ -48,7 +47,7 @@ RUN apt-get update -qq && \
         xfonts-terminus && \
 
 # Install guacd
-    wget -O /tmp/guacamole-server.tar.gz "http://apache.org/dyn/closer.cgi?action=download&filename=incubator/guacamole/${GUACAMOLE_VERSION}-incubating/source/guacamole-server-${GUACAMOLE_VERSION}-incubating.tar.gz" && \
+    wget -qO /tmp/guacamole-server.tar.gz "http://apache.org/dyn/closer.cgi?action=download&filename=incubator/guacamole/${GUACAMOLE_VERSION}-incubating/source/guacamole-server-${GUACAMOLE_VERSION}-incubating.tar.gz" && \
     tar xzf /tmp/guacamole-server.tar.gz -C /tmp && \
     cd /tmp/guacamole-server-${GUACAMOLE_VERSION}-incubating && \
     ./configure --prefix=/usr --sbindir=/usr/bin && \
