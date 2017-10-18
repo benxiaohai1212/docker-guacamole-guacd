@@ -16,7 +16,7 @@ ln -sf /usr/lib/freerdp/guacsnd-client.so /usr/lib/x86_64-linux-gnu/freerdp/guac
 # Create config directory for freerdp
 if [ ! -d /config/.config ]; then
    mkdir -p /config/.config
-   chown -R duser:users /config
+   chown -R abc:abc /config
 fi
 
 su-exec abc guacd -f -b 0.0.0.0
