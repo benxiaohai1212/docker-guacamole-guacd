@@ -57,8 +57,8 @@ RUN apt-get update -qq && \
     ldconfig && \
 
 # Create user
-    useradd -u 911 -U -d /config -s /bin/false abc && \
-    usermod -G users,video abc && \
+    useradd -r -u 911 -U -d /config -s /bin/false abc && \
+    usermod -G users abc && \
     
 # Cleanup
     apt-get purge -qq \
