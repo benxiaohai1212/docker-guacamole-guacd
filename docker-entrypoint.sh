@@ -8,7 +8,6 @@ PGID=${PGID:-911}
 # Set permissions
 groupmod -o -g "$PGID" abc
 usermod -o -u "$PUID" abc
-chown abc:abc /config
 
 # Link to the correct freerdp libs
 ln -sf /usr/lib/freerdp/guacdr-client.so /usr/lib/x86_64-linux-gnu/freerdp/guacdr-client.so
