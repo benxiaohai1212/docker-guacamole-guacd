@@ -1,6 +1,6 @@
-FROM debian:stretch
+FROM debian:stretch-slim
 
-ARG GUACAMOLE_VERSION="0.9.12"
+ARG GUACAMOLE_VERSION="0.9.13"
 ARG DEBIAN_FRONTEND="noninteractive"
 ENV HOME=/config
 
@@ -24,12 +24,6 @@ RUN apt-get update -qq && \
         libpulse-dev \
         libvorbis-dev \
         wget && \
-
-# Create user
-    useradd -u 911 -U -d /config -s /bin/false duser && \
-    usermod -G users duser && \
-    groupmod -o -g 100 duser && \
-    usermod -o -u 99 duser && \
 
 # Install runtime packages
     apt-get install -qy \
@@ -62,6 +56,10 @@ RUN apt-get update -qq && \
     make install && \
     ldconfig && \
 
+# Create user
+    useradd -u 911 -U -d /config -s /bin/false abc && \
+    usermod -G users,video abc && \
+    
 # Cleanup
     apt-get purge -qq \
         gcc \
