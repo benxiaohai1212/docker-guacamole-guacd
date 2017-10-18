@@ -4,7 +4,7 @@
 # About
 ![Guacamole-guacd](https://github.com/tunip/docker-guacamole-guacd/raw/master/guacamole-guacd.png)
 
-Guacamole server (remote desktop proxy for RDP, VNC, SSH and telnet) based in Debian.
+Guacamole server (remote desktop proxy for RDP, VNC, SSH and telnet) based on Debian.
 
 # Usage
 ```
