@@ -7,9 +7,11 @@ COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
 # Install build packages
 RUN apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -qy \ 
+    DEBIAN_FRONTEND=noninteractive apt-get install -qy \
+        ca-certificates \
         gcc \
         make \
+        libc6-dev \
         libcairo2-dev \
         libpng-dev \
         libossp-uuid-dev \
@@ -55,6 +57,13 @@ RUN apt-get update -qq && \
     make install && \
     ldconfig && \
 
+# Build su-exec
+    wget -qO /tmp/Makefile https://raw.githubusercontent.com/ncopa/su-exec/master/Makefile && \
+    wget -qO /tmp/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c && \
+    cd /tmp && \
+    make && \
+    cp /tmp/su-exec /usr/local/bin/ && \
+
 # Create user
     useradd -r -u 911 -U -d /config -s /bin/false abc && \
     usermod -G users abc && \
@@ -63,6 +72,7 @@ RUN apt-get update -qq && \
     apt-get purge -qq \
         gcc \
         make \
+        libc6-dev \
         libcairo2-dev \
         libpng-dev \
         libossp-uuid-dev \
