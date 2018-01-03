@@ -19,4 +19,4 @@ if [ ! -d /config/.config ]; then
    chown -R abc:abc /config
 fi
 
-su-exec abc guacd -f -b 0.0.0.0
+gosu abc guacd -f -b 0.0.0.0
