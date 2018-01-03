@@ -26,6 +26,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
         wget && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qy \
         gir1.2-pango-1.0 \
+        gosu \
         libcairo2 \
         libpango-1.0-0 \
         libwebp6 \
