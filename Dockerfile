@@ -5,8 +5,7 @@ ENV HOME=/config
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
-# Install build packages
-RUN apt-get update -qq && \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qy \
         ca-certificates \
         gcc \
@@ -25,8 +24,6 @@ RUN apt-get update -qq && \
         libpulse-dev \
         libvorbis-dev \
         wget && \
-
-# Install runtime packages
     DEBIAN_FRONTEND=noninteractive apt-get install -qy \
         gir1.2-pango-1.0 \
         libcairo2 \
@@ -47,29 +44,14 @@ RUN apt-get update -qq && \
         libxfreerdp-client1.1 \
         libpulse0 \
         xfonts-terminus && \
-
-# Install guacd
-    wget -qO /tmp/guacamole-server.tar.gz "http://apache.org/dyn/closer.cgi?action=download&filename=incubator/guacamole/${GUACAMOLE_VERSION}-incubating/source/guacamole-server-${GUACAMOLE_VERSION}-incubating.tar.gz" && \
+    wget -qO /tmp/guacamole-server.tar.gz "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUACAMOLE_VERSION}-incubating/source/guacamole-server-${GUACAMOLE_VERSION}-incubating.tar.gz" && \
     tar xzf /tmp/guacamole-server.tar.gz -C /tmp && \
     cd /tmp/guacamole-server-${GUACAMOLE_VERSION}-incubating && \
     ./configure --prefix=/usr --sbindir=/usr/bin && \
-    make && \
+    make -j$(nproc) && \
     make install && \
     ldconfig && \
-
-# Build su-exec
-    wget -qO /tmp/Makefile https://raw.githubusercontent.com/ncopa/su-exec/master/Makefile && \
-    wget -qO /tmp/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c && \
-    cd /tmp && \
-    make && \
-    cp /tmp/su-exec /usr/local/bin/ && \
-
-# Create user
-    useradd -r -u 911 -U -d /config -s /bin/false abc && \
-    usermod -G users abc && \
-    
-# Cleanup
-    apt-get purge -qq \
+    DEBIAN_FRONTEND=noninteractive apt-get purge -qq \
         gcc \
         make \
         libc6-dev \
@@ -86,11 +68,11 @@ RUN apt-get update -qq && \
         libpulse-dev \
         libvorbis-dev \
         wget && \
-    apt-get -y autoremove --purge && \
-    apt-get clean && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y autoremove --purge && \
+    DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-
-# Set file permissions
+    useradd -r -u 911 -U -d /config -s /bin/false abc && \
+    usermod -G users abc && \
     chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
