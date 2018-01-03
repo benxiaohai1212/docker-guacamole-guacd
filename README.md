@@ -10,5 +10,5 @@ Guacamole server (remote desktop proxy for RDP, VNC, SSH and telnet) based on De
 ```
 docker run -d --name="guacamole-guacd" \
     -p 4822:4822 \
-    tunip/guacamole
+    tunip/guacamole-guacd
 ```
