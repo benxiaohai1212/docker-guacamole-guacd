@@ -52,6 +52,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     make -j$(nproc) && \
     make install && \
     ldconfig && \
+    ln -s /usr/lib/freerdp/guacdr-client.so /usr/lib/x86_64-linux-gnu/freerdp/guacdr-client.so && \
+    ln -s /usr/lib/freerdp/guacsnd-client.so /usr/lib/x86_64-linux-gnu/freerdp/guacsnd-client.so && \
     DEBIAN_FRONTEND=noninteractive apt-get purge -qq \
         gcc \
         make \
