@@ -1,6 +1,6 @@
 FROM debian:stretch-slim
 
-ARG GUACAMOLE_VERSION="0.9.13"
+ARG GUACAMOLE_VERSION="0.9.14"
 ENV HOME=/config
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
@@ -45,9 +45,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
         libxfreerdp-client1.1 \
         libpulse0 \
         xfonts-terminus && \
-    wget -qO /tmp/guacamole-server.tar.gz "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUACAMOLE_VERSION}-incubating/source/guacamole-server-${GUACAMOLE_VERSION}-incubating.tar.gz" && \
+    wget -qO /tmp/guacamole-server.tar.gz "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUACAMOLE_VERSION}/source/guacamole-server-${GUACAMOLE_VERSION}.tar.gz" && \
     tar xzf /tmp/guacamole-server.tar.gz -C /tmp && \
-    cd /tmp/guacamole-server-${GUACAMOLE_VERSION}-incubating && \
+    cd /tmp/guacamole-server-${GUACAMOLE_VERSION} && \
     ./configure --prefix=/usr --sbindir=/usr/bin && \
     make -j$(nproc) && \
     make install && \
